@@ -1,20 +1,35 @@
 # Use this to get file by full path
 # import os
-# os.path.join(os.path.expanduser('~'), """"PATH_TO_FILE""")
+# os.path.join(os.path.expanduser('~'), 'file_name')
 
-file_name = 'input.txt'
 
-with open(file_name, 'r') as file:
-    file.readline(10)
+def generate_objc_strings_from_file(file_name):
+    """
+    Reads from file with name provided in file_name variable and
+    prints every string in console with format '@"line_from_file"'.
+    Printed strings can be used in objective-c code
 
-    prefix = '@"'
-    for line in file:
-        line = line.strip(' \t\n\r')
+    :param file_name: name of file to read
+    """
+    with open(file_name, 'r') as file:
 
-        if line[-1] == ';':
-            postfix = '"\n'
-        else:
-            postfix = ' "\n'
+        prefix = '@"'
+        for line in file:
+            line = line.strip(' \t\n\r')
 
-        newLine = prefix + line + postfix
-        print(newLine, sep='', end='')
+            if len(line) == 0:
+                print(line)
+                continue
+
+            if len(line) > 0 and line[-1] == ';':
+                postfix = '"\n'
+            else:
+                postfix = ' "\n'
+
+            new_line = prefix + line + postfix
+            print(new_line, sep='', end='')
+
+    return
+
+
+generate_objc_strings_from_file('input.txt')
